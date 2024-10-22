@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Calculator = () => {
   const [input, setInput] = useState("");
-  const [result, setResult] = useState(""); // Separate state for the result
+  const [result, setResult] = useState("");
   const [isResult, setIsResult] = useState(false);
 
   const isValidInput = (value) => {
@@ -27,10 +27,10 @@ const Calculator = () => {
     if (isResult) {
       if (["+", "-", "*", "/"].includes(value)) {
         setInput(input + value);
-        setResult(""); // Clear result when a new operation starts
+        setResult("");
       } else {
         setInput(value);
-        setResult(""); // Clear result when starting a new input
+        setResult(""); 
       }
       setIsResult(false);
     } else {
@@ -49,7 +49,7 @@ const Calculator = () => {
           ? evaluatedResult.toExponential(7)
           : parseFloat(evaluatedResult.toFixed(14));
 
-      setResult(formattedResult.toString().replace(/\./g, ',')); // Display the result
+      setResult(formattedResult.toString().replace(/\./g, ',')); 
       setIsResult(true);
     } catch {
       setResult("error");
@@ -58,37 +58,33 @@ const Calculator = () => {
 
   const clearInput = () => {
     setInput("");
-    setResult(""); // Clear the result on clear
+    setResult(""); 
     setIsResult(false);
   };
 
   const handleOperation = (operation) => {
     try {
       let value;
-
-      // If the input is empty or has only the result, set it to the previous result
       if (input === "") {
-        value = eval(result); // Use the result if input is empty
+        value = eval(result); 
       } else {
-        value = eval(input); // Evaluate the current input
+        value = eval(input); 
       }
 
       if (operation === "square") {
         value = value * value;
-        setInput(value.toString()); // Update the input with the squared value
+        setInput(value.toString()); 
       } else if (operation === "sqrt" && value >= 0) {
         value = Math.sqrt(value);
-        setInput(value.toString()); // Update the input with the square root value
+        setInput(value.toString());
       } else {
         throw new Error();
       }
-
       const formattedResult =
         Math.abs(value) > 9999999999
           ? value.toExponential(5)
           : parseFloat(value.toFixed(10));
-
-      setResult(formattedResult.toString()); // Display the result
+      setResult(formattedResult.toString()); 
       setIsResult(true);
     } catch {
       setResult("error");
@@ -107,11 +103,10 @@ const Calculator = () => {
   return (
     <div className="max-w-xs mt-7 mx-auto bg-slate-600 p-6 rounded-lg shadow-lg backdrop-blur-lg bg-opacity-50">
       <div className="flex flex-col mb-4">
-        <div className="border border-gray-300 p-4 text-right text-2xl bg-gray-200 rounded-md overflow-x-auto whitespace-nowrap text-ellipsis">
-        <p className="text-right text-lg">{input || "0"}</p>
-          {result} 
+        <div className="border border-gray-300 p-4 text-right text-2xl bg-gray-200 rounded-md overflow-hidden">
+          <p className="text-right text-base">{input || "0"}</p>
+          <p className="text-right text-3xl h-8 overflow-hidden">{result}</p> 
         </div>
-    
       </div>
       <div className="grid grid-cols-4 gap-4">
         <Button label="C" className="bg-red-500 hover:bg-red-700" onClick={clearInput} />
